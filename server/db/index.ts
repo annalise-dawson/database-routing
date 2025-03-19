@@ -27,7 +27,5 @@ export async function getEventsByDay(day: string) {
       'locations.name as locationName',
     )
 
-  console.log(events)
-
-  return events as EventWithLocation[]
+  return events
 }

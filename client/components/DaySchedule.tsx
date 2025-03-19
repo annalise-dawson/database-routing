@@ -21,6 +21,8 @@ export default function DaySchedule() {
   }
 
   const { events } = data
+  console.log(events)
+
   return (
     <>
       <LineupNav />
