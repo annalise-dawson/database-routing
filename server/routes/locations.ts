@@ -7,7 +7,6 @@ const router = express.Router()
 // GET /api/v1/locations
 router.get('/', async (req, res, next) => {
   try {
-    // TODO: Replace this with all of the locations in the database
     const locations = await db.getAllLocations()
     res.json({ locations })
   } catch (e) {
