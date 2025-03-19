@@ -19,13 +19,22 @@ export async function getEventsByDay(day: string) {
     .join('locations', 'events.location_id', '=', 'locations.id')
     .where('events.day', day)
     .select(
-      'events.id as id',
-      'events.day as day',
-      'events.time as time',
+      'events.id',
+      'events.day',
+      'events.time',
       'events.name as eventName',
-      'events.description as description',
+      'events.description',
       'locations.name as locationName',
     )
 
-  return events
+  return events as EventWithLocation[]
+}
+
+export async function getLocationById(id: string) {
+  const location = await connection('locations')
+    .where('id', id)
+    .select('id', 'name', 'description')
+    .first()
+
+  return location
 }
