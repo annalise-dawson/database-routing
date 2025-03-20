@@ -1,7 +1,7 @@
 import { EventWithLocation } from '../../models/Event.js'
 import knexFile from './knexfile.js'
-import knex from 'knex'
-import type { Location } from '../../models/Location.ts'
+import knex, { Knex } from 'knex'
+import type { Location, LocationData } from '../../models/Location.ts'
 
 type Environment = 'production' | 'test' | 'development'
 
@@ -35,6 +35,17 @@ export async function getLocationById(id: string) {
     .where('id', id)
     .select('id', 'name', 'description')
     .first()
+
+  return location
+}
+
+export async function updateLocation(
+  id: number,
+  updatedLocation: LocationData,
+) {
+  const location = await connection('locations')
+    .where('id', id)
+    .update(updatedLocation)
 
   return location
 }
