@@ -40,7 +40,6 @@ router.get('/:id', async (req, res, next) => {
   try {
     const id = Number(req.params.id)
     const event = await db.getEventById(id)
-    // TODO: if there's no event with that id, respond with a 404 instead
     if (!event) {
       res.sendStatus(404)
     } else {
