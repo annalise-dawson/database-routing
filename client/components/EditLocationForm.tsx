@@ -45,11 +45,11 @@ export default function EditLocationForm({ id, name, description }: Props) {
         value={formState.name}
         onChange={handleChange}
       />
-      <label htmlFor="description">Description</label>
+      <label htmlFor="location description">Description </label>
       <textarea
         rows={4}
+        id="location description"
         name="description"
-        placeholder="Location description"
         onChange={handleChange}
         value={formState.description}
       />
