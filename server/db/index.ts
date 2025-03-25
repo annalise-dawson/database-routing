@@ -62,3 +62,8 @@ export async function addNewEvent(newEvent: EventData) {
 
   return results
 }
+
+export async function deleteEvent(id: number) {
+  const result = await connection('events').where('id', id).delete()
+  return result
+}
