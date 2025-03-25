@@ -67,3 +67,24 @@ export async function deleteEvent(id: number) {
   const result = await connection('events').where('id', id).delete()
   return result
 }
+
+export async function getEventById(id: number) {
+  const event = await connection('events')
+    .where('id', id)
+    .select(
+      'id',
+      'location_id as locationId',
+      'day',
+      'time',
+      'name',
+      'description',
+    )
+    .first()
+
+  return event
+}
+
+// export async function editEvent(editedEvent: EventData, id: number) {
+//   const result = await connection('events').where({ id }).update(editedEvent)
+//   return result
+// }
