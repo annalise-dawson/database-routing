@@ -1,7 +1,8 @@
-import { EventWithLocation } from '../../models/Event.js'
+// import { EventWithLocation } from '../../models/Event.js'
 import knexFile from './knexfile.js'
-import knex, { Knex } from 'knex'
-import type { Location, LocationData } from '../../models/Location.ts'
+import knex from 'knex'
+import type { /*Location,*/ LocationData } from '../../models/Location.ts'
+import { EventData } from '../../models/Event.ts'
 
 type Environment = 'production' | 'test' | 'development'
 
@@ -11,7 +12,7 @@ export const connection = knex(config)
 
 export async function getAllLocations() {
   const locations = await connection('locations').select()
-  return locations as Location[]
+  return locations
 }
 
 export async function getEventsByDay(day: string) {
@@ -27,7 +28,7 @@ export async function getEventsByDay(day: string) {
       'locations.name as locationName',
     )
 
-  return events as EventWithLocation[]
+  return events
 }
 
 export async function getLocationById(id: string) {
@@ -48,4 +49,16 @@ export async function updateLocation(
     .update(updatedLocation)
 
   return location
+}
+
+export async function addNewEvent(newEvent: EventData) {
+  const results = await connection('events').insert({
+    day: newEvent.day,
+    description: newEvent.description,
+    time: newEvent.time,
+    name: newEvent.name,
+    location_id: Number(newEvent.locationId),
+  })
+
+  return results
 }
