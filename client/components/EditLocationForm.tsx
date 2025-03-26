@@ -48,7 +48,7 @@ export default function EditLocationForm({ id, name, description }: Props) {
       <label htmlFor="location description">Description </label>
       <textarea
         rows={4}
-        id="location description"
+        id="location description" //added id to link to label
         name="description"
         onChange={handleChange}
         value={formState.description}
