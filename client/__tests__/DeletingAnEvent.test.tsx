@@ -56,15 +56,26 @@ describe('Deleting an event', () => {
   })
 
   it('deletes the event when the delete button is clicked', async () => {
-    const { user, ...screen } = setupApp('/events/1/edit')
-    const deleteButton = await screen.findByPlaceholderText('delete button')
-    expect(deleteButton).toBeVisible()
+    const eventScope = nock('http://localhost')
+      .get('/api/v1/events/1')
+      .reply(200, fakeEvent)
 
-    const deleteScope = nock('http:localhost')
+    const locationScope = nock('http://localhost')
+      .get('/api/v1/locations')
+      .reply(200, fakeLocations)
+
+    const deleteScope = nock('http://localhost')
       .delete('/api/v1/events/1')
       .reply(200)
+
+    const { user, ...screen } = setupApp('/events/1/edit')
+
+    const deleteButton = await screen.findByText('Delete event')
+
     await user.click(deleteButton)
 
+    expect(eventScope.isDone()).toBe(true)
+    expect(locationScope.isDone()).toBe(true)
     expect(deleteScope.isDone()).toBe(true)
   })
 })
