@@ -18,13 +18,13 @@ afterAll(async () => {
 
 describe('Deleting an Event', () => {
   it('can be deleted', async () => {
-    const res = await request(server).get('api/v1/events/1')
+    const res = await request(server).get('/api/v1/events/1')
     expect(res.status).toBe(200)
 
     const res2 = await request(server).delete('/api/v1/events/1')
     expect(res2.status).toBe(204)
 
-    const res3 = await request(server).get('api/v1/events/1')
+    const res3 = await request(server).get('/api/v1/events/1')
     expect(res3.status).toBe(404)
   })
 })

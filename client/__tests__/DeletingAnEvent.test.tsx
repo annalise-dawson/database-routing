@@ -1,7 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeAll } from 'vitest'
 import nock from 'nock'
-
 import { setupApp } from './setup.tsx'
 
 beforeAll(() => {
@@ -56,10 +55,16 @@ describe('Deleting an event', () => {
     expect(locationScope.isDone()).toBe(true)
   })
 
-  it.todo('deletes the event when the delete button is clicked', async () => {
-    // TODO: write client integration test for event delete
-    // ARRANGE
-    // ACT
-    // ASSERT
+  it('deletes the event when the delete button is clicked', async () => {
+    const { user, ...screen } = setupApp('/events/1/edit')
+    const deleteButton = await screen.findByPlaceholderText('delete button')
+    expect(deleteButton).toBeVisible()
+
+    const deleteScope = nock('http:localhost')
+      .delete('/api/v1/events/1')
+      .reply(200)
+    await user.click(deleteButton)
+
+    expect(deleteScope.isDone()).toBe(true)
   })
 })
